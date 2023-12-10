@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce57ha6jkbu2h"]
+
+[ext_resource type="PackedScene" uid="uid://conqibygdim7c" path="res://Scenes/player.tscn" id="1_5utox"]
+[ext_resource type="Script" path="res://Scripts/node_2d.gd" id="1_kyaf5"]
+[ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="2_x1qbk"]
+[ext_resource type="PackedScene" uid="uid://dcmd6s6ekge3t" path="res://Scenes/Platform_placer.tscn" id="4_ge5b4"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_g2bh4"]
+a = Vector2(-1, 611)
+b = Vector2(1150, 614)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_kyaf5")
+
+[node name="player" parent="." instance=ExtResource("1_5utox")]
+position = Vector2(475, 343)
+
+[node name="ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+shape = SubResource("SegmentShape2D_g2bh4")
+
+[node name="Sprite2D" type="Sprite2D" parent="ground"]
+position = Vector2(575.5, 675)
+scale = Vector2(8.99219, 1)
+texture = ExtResource("2_x1qbk")
+
+[node name="platform_placer" parent="." instance=ExtResource("4_ge5b4")]
+
+[node name="Node2D" type="Node2D" parent="."]
