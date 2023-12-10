@@ -1,7 +1,7 @@
 extends Area2D
 @onready var clearance_checker = $"."
 @onready var sprite = $Sprite
-var PLATFORM_DASH_1 = preload("res://platform_dash1.tscn")
+var PLATFORM_DASH_1 = preload("res://Scenes/platform_dash1.tscn")
 
 signal place_platform(platform_type, Position)
 

@@ -27,4 +27,4 @@ texture = ExtResource("2_x1qbk")
 
 [node name="platform_placer" parent="." instance=ExtResource("4_ge5b4")]
 
-[node name="Node2D" type="Node2D" parent="."]
+[connection signal="place_platform" from="platform_placer" to="." method="_on_platform_placer_place_platform"]
