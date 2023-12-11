@@ -3,8 +3,6 @@
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_earx6"]
 [ext_resource type="Texture2D" uid="uid://swdvs6hthdy3" path="res://Assets/slime_mc.png" id="2_w26fi"]
 
-
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1qfdo"]
 size = Vector2(98, 71)
 
