@@ -22,6 +22,7 @@ func gravitational_pull_remover(not_pullers, pullers):
 		for j in range(len(not_pullers)):
 			if pullers[i] == not_pullers[j]:
 				pullers.pop_at(i)
+				not_pullers.pop_at(j)
 
 func gravitational_pull_add(body_pos):
 	pullers.append(Vector2(body_pos))

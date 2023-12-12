@@ -12,6 +12,11 @@ script = ExtResource("1_pcd2o")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_h6hfs")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-1.5, -2.50001)
+scale = Vector2(2.36719, 2.39844)
+texture = ExtResource("2_cdt3q")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.48, 0.48)
 texture = ExtResource("2_cdt3q")
