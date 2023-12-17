@@ -8,6 +8,7 @@ var body_on_which_sticked
 var tr_ci_collider_to_ball = Transform2D()
 var jumping = false
 @onready var timer = $Timer
+@onready var marker_2d = $"../Marker2D"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -21,8 +22,8 @@ func _ready():
 	set_use_custom_integrator(false) 
 
 func _process(delta):
-	
-	if Input.is_action_just_pressed("jump") and is_sticking:
+	update_marker()
+	if Input.is_action_just_pressed("jump"):
 		print("jump")
 		
 		is_sticking = false
@@ -30,8 +31,7 @@ func _process(delta):
 		jump()
 
 func _integrate_forces(body_state):
-	# Handle jump.
-	print(body_state.get_contact_count())
+	update_marker()
 	if is_sticking == false && body_state.get_contact_count() == 1 and not jumping:
 		is_sticking = true
 		# Ignore Godot physics once the ball sticks
@@ -52,16 +52,36 @@ func _integrate_forces(body_state):
 
 		global_transform = body_on_which_sticked.get_global_transform() * tr_ci_collider_to_ball
 
+func pushing_platforms(jump_force):
+	var colliding_bodys = get_colliding_bodies()
+	var colliding_platforms = []
+	
+	for i in range(len(colliding_bodys)):
+		if colliding_bodys[i].is_in_group("platform"):
+			colliding_platforms.append(colliding_bodys[i])
+	for j in range(len(colliding_platforms)):
+		colliding_platforms[j].impulse(position, jump_force, mass)
+		print("impulse sent")
+
 func jump():
 	var screen_size = get_window().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	var jump_direction = mouse_pos - Vector2(screen_size /2)
 	var true_jump_dir = - jump_direction.normalized()
 	var jump_force = true_jump_dir * JUMP_VELOCITY
+	
 	jumping = true
 	timer.start()
 	apply_central_impulse(jump_force)
-
+	
+func update_marker():
+	var screen_size = get_window().size
+	var mouse_pos = get_viewport().get_mouse_position()
+	var jump_direction = mouse_pos - Vector2(screen_size /2)
+	var true_jump_dir = - jump_direction.normalized()
+	var jump_force = true_jump_dir * JUMP_VELOCITY
+	marker_2d.update_pos(jump_force)
+	
 func _on_timer_timeout():
 	jumping = false
 	pass # Replace with function body.
