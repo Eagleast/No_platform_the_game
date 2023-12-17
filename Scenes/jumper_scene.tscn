@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://poglodaq8dc7"]
+[gd_scene load_steps=4 format=3 uid="uid://poglodaq8dc7"]
 
 [ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/jumper.tscn" id="1_csb1s"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
-[ext_resource type="Script" path="res://Scripts/jumper.gd" id="2_o8k6u"]
 [ext_resource type="PackedScene" uid="uid://c1j1gype5kvjh" path="res://Scenes/platform_movable.tscn" id="3_nln7u"]
 
 [node name="jumper_scene" type="Node2D"]
@@ -12,9 +11,7 @@ position = Vector2(1027, 5831.5)
 scale = Vector2(17.0469, 92.1172)
 texture = ExtResource("1_jxg68")
 
-[node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
-position = Vector2(292, 188)
-script = ExtResource("2_o8k6u")
-
 [node name="sol" parent="." instance=ExtResource("3_nln7u")]
 position = Vector2(286, 342)
+
+[node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
