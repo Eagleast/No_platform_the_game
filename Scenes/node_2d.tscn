@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce57ha6jkbu2h"]
+[gd_scene load_steps=5 format=3 uid="uid://clocyxny04138"]
 
 [ext_resource type="Script" path="res://Scripts/node_2d.gd" id="1_kyaf5"]
-[ext_resource type="PackedScene" uid="uid://dkmdn6cj3yc24" path="res://Scenes/black_hole.tscn" id="2_pmf72"]
-[ext_resource type="PackedScene" uid="uid://bkvay5w2qny6a" path="res://Scenes/not_a_player.tscn" id="3_031y3"]
-[ext_resource type="PackedScene" uid="uid://dcmd6s6ekge3t" path="res://Scenes/Platform_placer.tscn" id="4_u3sby"]
+[ext_resource type="PackedScene" path="res://Scenes/black_hole.tscn" id="2_pmf72"]
+[ext_resource type="PackedScene" uid="uid://bkx4x6vilm88d" path="res://Scenes/not_a_player.tscn" id="3_031y3"]
+[ext_resource type="PackedScene" path="res://Scenes/Platform_placer.tscn" id="4_u3sby"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_kyaf5")
@@ -15,5 +15,3 @@ position = Vector2(561, 383)
 position = Vector2(484, 50)
 
 [node name="platform_placer" parent="." instance=ExtResource("4_u3sby")]
-
-[connection signal="place_platform" from="platform_placer" to="." method="_on_platform_placer_place_platform"]
