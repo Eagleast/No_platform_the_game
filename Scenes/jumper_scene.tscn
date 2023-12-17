@@ -7,11 +7,17 @@
 [node name="jumper_scene" type="Node2D"]
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(1027, 5831.5)
+position = Vector2(980, 5806)
 scale = Vector2(17.0469, 92.1172)
 texture = ExtResource("1_jxg68")
 
 [node name="sol" parent="." instance=ExtResource("3_nln7u")]
-position = Vector2(286, 342)
+position = Vector2(436, 330)
 
 [node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
+
+[node name="sol2" parent="." instance=ExtResource("3_nln7u")]
+position = Vector2(1, 18)
+
+[node name="sol3" parent="." instance=ExtResource("3_nln7u")]
+position = Vector2(166, -311)

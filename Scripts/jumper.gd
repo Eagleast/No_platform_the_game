@@ -22,7 +22,7 @@ func _ready():
 
 func _process(delta):
 	
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and is_sticking:
 		print("jump")
 		
 		is_sticking = false
@@ -49,6 +49,7 @@ func _integrate_forces(body_state):
 	if is_sticking :
 		# We take the last transform of the moving collider, and we keep the same relative position of the ball to the collider it had at the collision instant.
 		# In other words: "world->collider (at latest news), and then, collider->ball (like at the collision instant)".
+
 		global_transform = body_on_which_sticked.get_global_transform() * tr_ci_collider_to_ball
 
 func jump():
