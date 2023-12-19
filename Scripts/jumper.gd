@@ -9,6 +9,7 @@ var tr_ci_collider_to_ball = Transform2D()
 var jumping = false
 @onready var timer = $Timer
 @onready var marker_2d = $"../Marker2D"
+@onready var jumper = $"."
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -34,7 +35,9 @@ func _integrate_forces(body_state):
 	update_marker()
 	if is_sticking == false && body_state.get_contact_count() == 1 and not jumping:
 		is_sticking = true
-		# Ignore Godot physics once the ball sticks
+		#set jumper velocity to 0 so the old velocity doesnt add up in next jump
+		jumper.set_linear_velocity(Vector2(0,0))
+		# Ignore Godot physics once the jumper sticks
 		set_use_custom_integrator(true)
 		# Get the rigid body on which the ball will stick
 		body_on_which_sticked = body_state.get_contact_collider_object(0)
@@ -63,17 +66,27 @@ func pushing_platforms(jump_force):
 		colliding_platforms[j].impulse(position, jump_force, mass)
 		print("impulse sent")
 
+# saute dans la direction du curseur et
 func jump():
+	#recupere la taille de la fenetre
 	var screen_size = get_window().size
+	#recupere la position de la souris dans l'ecran
 	var mouse_pos = get_viewport().get_mouse_position()
+	#comme le jumper est toujours au centre de l'ecran
+	#on peut faire l'euristique de dire que le jumper doit sauter
+	#dans la direction du vecteur qui va du centre de l'ecran à a souris
 	var jump_direction = mouse_pos - Vector2(screen_size /2)
+	#on normalize le vecteur pour ensuite lui appliquer la force voulu
 	var true_jump_dir = - jump_direction.normalized()
+	#valeur finale du saut il faut remplacer jump velocity pour que le joueur puisse regler la puissance du saut
 	var jump_force = true_jump_dir * JUMP_VELOCITY
-	
+	#jumping true dure la durée du timer pour entre autre empecher jumper de se recoller a la deuxieme frame du saut
+	pushing_platforms(jump_force*10)
 	jumping = true
 	timer.start()
 	apply_central_impulse(jump_force)
 	
+	#updates the position of the debug marker (not working rn)
 func update_marker():
 	var screen_size = get_window().size
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -82,6 +95,7 @@ func update_marker():
 	var jump_force = true_jump_dir * JUMP_VELOCITY
 	marker_2d.update_pos(jump_force)
 	
+	#timer pour que jumper ne puisse pas se reacrcher instantanément après avoir sauté
 func _on_timer_timeout():
 	jumping = false
 	pass # Replace with function body.

@@ -30,7 +30,7 @@ zoom = Vector2(0.59, 0.59)
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
