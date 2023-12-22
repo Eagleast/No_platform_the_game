@@ -10,6 +10,10 @@ var jumping = false
 @onready var timer = $Timer
 @onready var marker_2d = $"../Marker2D"
 @onready var jumper = $"."
+var jump_force = 0
+
+@export var max_jump_vel:float
+@export var time_to_max_jump:float
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -24,9 +28,10 @@ func _ready():
 
 func _process(delta):
 	update_marker()
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_pressed("jump") and is_sticking:
+		add_jump_force(delta)
+	if Input.is_action_just_released("jump") and is_sticking:
 		print("jump")
-		
 		is_sticking = false
 		set_use_custom_integrator(false)
 		jump()
@@ -79,12 +84,13 @@ func jump():
 	#on normalize le vecteur pour ensuite lui appliquer la force voulu
 	var true_jump_dir = - jump_direction.normalized()
 	#valeur finale du saut il faut remplacer jump velocity pour que le joueur puisse regler la puissance du saut
-	var jump_force = true_jump_dir * JUMP_VELOCITY
+	var jump_velocity =- true_jump_dir * jump_force
 	#jumping true dure la durée du timer pour entre autre empecher jumper de se recoller a la deuxieme frame du saut
-	pushing_platforms(jump_force*10)
+	pushing_platforms(jump_velocity)
 	jumping = true
 	timer.start()
-	apply_central_impulse(jump_force)
+	apply_central_impulse(jump_velocity)
+	jump_force = 0
 	
 	#updates the position of the debug marker (not working rn)
 func update_marker():
@@ -93,9 +99,15 @@ func update_marker():
 	var jump_direction = mouse_pos - Vector2(screen_size /2)
 	var true_jump_dir = - jump_direction.normalized()
 	var jump_force = true_jump_dir * JUMP_VELOCITY
-	marker_2d.update_pos(jump_force)
+	marker_2d.update_pos(jump_force / 2 + position)
 	
 	#timer pour que jumper ne puisse pas se reacrcher instantanément après avoir sauté
 func _on_timer_timeout():
 	jumping = false
 	pass # Replace with function body.
+
+func add_jump_force(delta):
+	jump_force += max_jump_vel / time_to_max_jump * delta
+	if jump_force >= max_jump_vel:
+		jump_force = max_jump_vel
+	print(jump_force)

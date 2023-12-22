@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvr0nl20r1wci"]
+[gd_scene load_steps=6 format=3 uid="uid://dvr0nl20r1wci"]
 
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_5tifr"]
 [ext_resource type="Script" path="res://Scripts/jumper.gd" id="1_p6lrq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_54ssp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l5evq"]
 radius = 63.2851
@@ -11,8 +13,11 @@ radius = 64.1249
 
 [node name="Jumper" type="RigidBody2D"]
 position = Vector2(0, -63)
+physics_material_override = SubResource("PhysicsMaterial_54ssp")
 gravity_scale = 0.0
 script = ExtResource("1_p6lrq")
+max_jump_vel = 3000.0
+time_to_max_jump = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_5tifr")
