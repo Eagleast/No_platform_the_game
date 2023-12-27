@@ -1,24 +1,25 @@
 extends RigidBody2D
 const SPEED = 300.0
-const JUMP_VELOCITY = -700.0
-@onready var area_2d = $Area2D
-var mass_player = 100
+var jump_force = 0.0
 var is_sticking = false
 var body_on_which_sticked
 var tr_ci_collider_to_ball = Transform2D()
 var jumping = false
-@onready var timer = $Timer
-@onready var marker_2d = $"../Marker2D"
-@onready var jumper = $"."
-var jump_force = 0
-
+var starting_pos = Vector2(0,0)
+var jump_velocity = Vector2(0,0)
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var max_jump_vel:float
 @export var time_to_max_jump:float
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var timer = $Timer
+@onready var marker_2d = $"../Marker2D"
+@onready var jumper = $"."
+@onready var area_2d = $Area2D
+
 
 func _ready():
+	position = starting_pos
 	# Enable the logging of 5 collisions.
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
@@ -27,7 +28,6 @@ func _ready():
 	set_use_custom_integrator(false) 
 
 func _process(delta):
-	update_marker()
 	if Input.is_action_pressed("jump") and is_sticking:
 		add_jump_force(delta)
 	if Input.is_action_just_released("jump") and is_sticking:
@@ -35,9 +35,12 @@ func _process(delta):
 		is_sticking = false
 		set_use_custom_integrator(false)
 		jump()
+	if Input.is_action_pressed("reset"):
+		game_over()
 
 func _integrate_forces(body_state):
-	update_marker()
+	if Input.is_action_pressed("reset"):
+		game_over()
 	if is_sticking == false && body_state.get_contact_count() == 1 and not jumping:
 		is_sticking = true
 		#set jumper velocity to 0 so the old velocity doesnt add up in next jump
@@ -59,8 +62,7 @@ func _integrate_forces(body_state):
 		# In other words: "world->collider (at latest news), and then, collider->ball (like at the collision instant)".
 
 		global_transform = body_on_which_sticked.get_global_transform() * tr_ci_collider_to_ball
-
-func pushing_platforms(jump_force):
+func pushing_platforms(jumping_force):
 	var colliding_bodys = get_colliding_bodies()
 	var colliding_platforms = []
 	
@@ -68,7 +70,7 @@ func pushing_platforms(jump_force):
 		if colliding_bodys[i].is_in_group("platform"):
 			colliding_platforms.append(colliding_bodys[i])
 	for j in range(len(colliding_platforms)):
-		colliding_platforms[j].impulse(position, jump_force, mass)
+		colliding_platforms[j].impulse(position, jumping_force, mass)
 		print("impulse sent")
 
 # saute dans la direction du curseur et
@@ -84,7 +86,7 @@ func jump():
 	#on normalize le vecteur pour ensuite lui appliquer la force voulu
 	var true_jump_dir = - jump_direction.normalized()
 	#valeur finale du saut il faut remplacer jump velocity pour que le joueur puisse regler la puissance du saut
-	var jump_velocity =- true_jump_dir * jump_force
+	jump_velocity =- true_jump_dir * jump_force
 	#jumping true dure la durée du timer pour entre autre empecher jumper de se recoller a la deuxieme frame du saut
 	pushing_platforms(jump_velocity)
 	jumping = true
@@ -93,15 +95,11 @@ func jump():
 	jump_force = 0
 	
 	#updates the position of the debug marker (not working rn)
+
 func update_marker():
-	var screen_size = get_window().size
-	var mouse_pos = get_viewport().get_mouse_position()
-	var jump_direction = mouse_pos - Vector2(screen_size /2)
-	var true_jump_dir = - jump_direction.normalized()
-	var jump_force = true_jump_dir * JUMP_VELOCITY
-	marker_2d.update_pos(jump_force / 2 + position)
-	
+	marker_2d.update_pos(jump_velocity / 2 + position)
 	#timer pour que jumper ne puisse pas se reacrcher instantanément après avoir sauté
+
 func _on_timer_timeout():
 	jumping = false
 	pass # Replace with function body.
@@ -111,3 +109,10 @@ func add_jump_force(delta):
 	if jump_force >= max_jump_vel:
 		jump_force = max_jump_vel
 	print(jump_force)
+
+func game_over():
+	respawn()
+	respawn()
+	is_sticking = false
+func respawn(): 
+	set_position(starting_pos)
