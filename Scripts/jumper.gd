@@ -16,9 +16,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var marker_2d = $"../Marker2D"
 @onready var jumper = $"."
 @onready var area_2d = $Area2D
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 
 func _ready():
+	
 	position = starting_pos
 	# Enable the logging of 5 collisions.
 	set_contact_monitor(true)
@@ -27,6 +30,7 @@ func _ready():
 	# Apply Godot physics at first
 	set_use_custom_integrator(false) 
 
+
 func _process(delta):
 	if Input.is_action_pressed("jump") and is_sticking:
 		add_jump_force(delta)
@@ -34,6 +38,7 @@ func _process(delta):
 		print("jump")
 		is_sticking = false
 		set_use_custom_integrator(false)
+		set_freeze_enabled(0)
 		jump()
 	if Input.is_action_pressed("reset"):
 		game_over()
@@ -46,9 +51,15 @@ func _integrate_forces(body_state):
 		#set jumper velocity to 0 so the old velocity doesnt add up in next jump
 		jumper.set_linear_velocity(Vector2(0,0))
 		# Ignore Godot physics once the jumper sticks
-		set_use_custom_integrator(true)
+		#set_use_custom_integrator(true)
+		set_freeze_mode(FREEZE_MODE_STATIC)
+		set_freeze_enabled(1)
+		print(get_freeze_mode())
 		# Get the rigid body on which the ball will stick
 		body_on_which_sticked = body_state.get_contact_collider_object(0)
+		if body_on_which_sticked.is_in_group("platform"):
+			pass
+			#body_on_which_sticked.add_collision(collision_shape_2d.get_shape(),global_transform)
 		# For debug, check on which we are sticking
 		print("The ball is sticking on a ", body_on_which_sticked.get_name())
 		# Some transforms (tr) at the collision instant (ci)
@@ -60,8 +71,8 @@ func _integrate_forces(body_state):
 	if is_sticking :
 		# We take the last transform of the moving collider, and we keep the same relative position of the ball to the collider it had at the collision instant.
 		# In other words: "world->collider (at latest news), and then, collider->ball (like at the collision instant)".
-
 		global_transform = body_on_which_sticked.get_global_transform() * tr_ci_collider_to_ball
+
 func pushing_platforms(jumping_force):
 	var colliding_bodys = get_colliding_bodies()
 	var colliding_platforms = []
@@ -93,6 +104,7 @@ func jump():
 	timer.start()
 	apply_central_impulse(jump_velocity)
 	jump_force = 0
+	
 	
 	#updates the position of the debug marker (not working rn)
 
