@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://gx8k05ycsa23"]
+
+[ext_resource type="PackedScene" uid="uid://dktch85c0os70" path="res://Scenes/jumper.tscn" id="1_csb1s"]
+[ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
+[ext_resource type="PackedScene" uid="uid://8c2jm66q6n25" path="res://Scenes/platform_movable.tscn" id="3_nln7u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
+size = Vector2(4.34, 29.705)
+
+[node name="jumper_scene" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(881, -65.25)
+scale = Vector2(22.6563, 21.9102)
+texture = ExtResource("1_jxg68")
+
+[node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
+position = Vector2(-324, -51)
+max_jump_vel = 1500.0
+time_to_max_jump = 1.0
+
+[node name="outside_walls" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="outside_walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="outside_walls/StaticBody2D"]
+position = Vector2(-783, -107)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_mfd2g")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="outside_walls/StaticBody2D"]
+position = Vector2(2561, -107)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_mfd2g")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="outside_walls/StaticBody2D"]
+position = Vector2(870.75, -1692)
+rotation = 1.5708
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_mfd2g")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="outside_walls/StaticBody2D"]
+position = Vector2(903, 1560)
+rotation = 1.5708
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_mfd2g")
+
+[node name="Environement" type="Node2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="sol" parent="Environement" instance=ExtResource("3_nln7u")]
+position = Vector2(6, 120)

@@ -4,14 +4,14 @@ var pullers = []
 var not_pullers = []
 @export var MAX_VELOCITY = Vector2(10000, 10000)
 
-func max_velocity(velocity):
-	if velocity.y > MAX_VELOCITY.y :
+func max_velocity(chien):
+	if chien.y > MAX_VELOCITY.y :
 		velocity.y = MAX_VELOCITY.y
-	if velocity.x > MAX_VELOCITY.x :
+	if chien.x > MAX_VELOCITY.x :
 		velocity.x = MAX_VELOCITY.x
-	if velocity.y < -MAX_VELOCITY.y :
+	if chien.y < -MAX_VELOCITY.y :
 		velocity.y = -MAX_VELOCITY.y
-	if velocity.x < -MAX_VELOCITY.x :
+	if chien.x < -MAX_VELOCITY.x :
 		velocity.x = -MAX_VELOCITY.x
 		
 func gravitational_pull_remove(body_pos):
