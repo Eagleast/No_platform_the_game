@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvr0nl20r1wci"]
+[gd_scene load_steps=8 format=3 uid="uid://dvr0nl20r1wci"]
 
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_5tifr"]
 [ext_resource type="Script" path="res://Scripts/jumper.gd" id="1_p6lrq"]
+[ext_resource type="Script" path="res://Scripts/preview_jump.gd" id="3_lv5bx"]
+[ext_resource type="Script" path="res://Scenes/direction_vector.gd" id="4_vuhle"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_54ssp"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_acnxy"]
+rough = true
+bounce = 1.0
+absorbent = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l5evq"]
 radius = 63.2851
@@ -13,7 +18,7 @@ radius = 64.1249
 
 [node name="Jumper" type="RigidBody2D"]
 position = Vector2(0, -63)
-physics_material_override = SubResource("PhysicsMaterial_54ssp")
+physics_material_override = SubResource("PhysicsMaterial_acnxy")
 gravity_scale = 0.0
 script = ExtResource("1_p6lrq")
 max_jump_vel = 3000.0
@@ -37,6 +42,14 @@ zoom = Vector2(0.59, 0.59)
 process_callback = 0
 wait_time = 0.1
 one_shot = true
+
+[node name="Jump_preview" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+script = ExtResource("3_lv5bx")
+
+[node name="direction_vector" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+script = ExtResource("4_vuhle")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://8l50u8maqmrn"]
+[gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
 
 [ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/jumper.tscn" id="1_csb1s"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
-[ext_resource type="PackedScene" uid="uid://c1j1gype5kvjh" path="res://Scenes/platform_movable.tscn" id="3_nln7u"]
+[ext_resource type="PackedScene" uid="uid://dxjwj5ip3evdu" path="res://Scenes/preview_jump.tscn" id="1_ts7dj"]
+[ext_resource type="Script" path="res://Scripts/preview_jump.gd" id="2_xumlp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
 size = Vector2(4.34, 29.705)
 
 [node name="jumper_scene" type="Node2D"]
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Line2D" parent="." instance=ExtResource("1_ts7dj")]
+script = ExtResource("2_xumlp")
+
+[node name="Background" type="Sprite2D" parent="."]
 position = Vector2(881, -65.25)
 scale = Vector2(22.6563, 21.9102)
 texture = ExtResource("1_jxg68")
@@ -44,9 +48,3 @@ position = Vector2(903, 1560)
 rotation = 1.5708
 scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_mfd2g")
-
-[node name="Environement" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, 2.08165e-12)
-
-[node name="sol" parent="Environement" instance=ExtResource("3_nln7u")]
-position = Vector2(6, 120)
