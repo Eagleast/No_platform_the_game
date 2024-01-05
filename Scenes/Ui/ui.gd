@@ -4,5 +4,4 @@ extends CanvasLayer
 
 
 func _on_fuel_lvl(fuel_lvl_player, max_fuel_player):
-	print("emited")
 	fuel_lvl.value = fuel_lvl_player / max_fuel_player

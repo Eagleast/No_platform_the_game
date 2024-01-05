@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccih1ofbh8min"]
+[gd_scene load_steps=4 format=3 uid="uid://ccih1ofbh8min"]
 
+[ext_resource type="Script" path="res://Scenes/world/bumper.gd" id="1_g6a0h"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_nophc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sash4"]
@@ -7,9 +8,15 @@ radius = 63.3877
 
 [node name="RigidBody2D" type="RigidBody2D" groups=["player"]]
 gravity_scale = 1.66533e-16
+script = ExtResource("1_g6a0h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_nophc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
 shape = SubResource("CircleShape2D_sash4")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
