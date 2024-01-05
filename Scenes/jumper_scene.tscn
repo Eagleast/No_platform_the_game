@@ -1,17 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
+[gd_scene load_steps=5 format=3 uid="uid://8l50u8maqmrn"]
 
 [ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/jumper.tscn" id="1_csb1s"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
-[ext_resource type="PackedScene" uid="uid://dxjwj5ip3evdu" path="res://Scenes/preview_jump.tscn" id="1_ts7dj"]
-[ext_resource type="Script" path="res://Scripts/preview_jump.gd" id="2_xumlp"]
+[ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://bumper.tscn" id="5_pty02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
 size = Vector2(4.34, 29.705)
 
 [node name="jumper_scene" type="Node2D"]
-
-[node name="Line2D" parent="." instance=ExtResource("1_ts7dj")]
-script = ExtResource("2_xumlp")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(881, -65.25)
@@ -20,8 +16,6 @@ texture = ExtResource("1_jxg68")
 
 [node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
 position = Vector2(-324, -51)
-max_jump_vel = 1500.0
-time_to_max_jump = 1.0
 
 [node name="outside_walls" type="Node2D" parent="."]
 
@@ -48,3 +42,5 @@ position = Vector2(903, 1560)
 rotation = 1.5708
 scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_mfd2g")
+
+[node name="RigidBody2D" parent="." instance=ExtResource("5_pty02")]

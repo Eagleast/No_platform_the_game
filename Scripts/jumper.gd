@@ -1,37 +1,90 @@
 extends RigidBody2D
 
-const SPEED = 300.0
-var jump_force = 0.0
-var is_sticking = false
-var body_on_which_sticked
-var tr_ci_collider_to_ball = Transform2D()
-var jumping = false
-var starting_pos = Vector2(0,0)
-var jump_velocity = Vector2(0,0)
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var sprite_2d = $Sprite2D
 
-@export var max_jump_vel:float
-@export var time_to_max_jump:float
-@onready var timer = $Timer
-@onready var area_2d = $Area2D
-@onready var jump_preview = $Jump_preview
-@onready var direction_vector = $direction_vector
+var moving = true
+var starting_pos = Vector2(0,0)
+var thruster_speed = 600
+var booster_fuel = 100
+var is_boosting = false
+
+@export var max_booster_fuel = 1000
+@export var fuel_regen = 200
+@export var fuel_conso = 500 
+@export var bumpiness = 300
+@export var base_thruster_speed = 600
+@export var booster_speed = 600
+@export var max_speed = 1000
+
+
 
 func _ready():
+	thruster_speed = base_thruster_speed
 	position = starting_pos
+	set_contact_monitor(true)
+	set_max_contacts_reported(5)
 
 func _process(delta):
-	if Input.is_action_pressed("jump"):
-		add_jump_force(delta)
-	if Input.is_action_just_released("jump"):
-		print("jump")
-		jump()
+	
+	handle_inputs() #handles input presses
+	
+	bump() #handles bumps with other players or environement
+	
+	move() #makes the player move
+	
+	print_debbug()
+	
+	boost(delta)
+
+func print_debbug():
+	#print(thruster_speed)
+	print(booster_fuel)
+
+func boost(delta):
+	if is_boosting:
+		sprite_2d.flip_v = true
+		thruster_speed = base_thruster_speed + booster_speed
+		booster_fuel -= fuel_conso * delta
+		if booster_fuel <= 0:
+			is_boosting = false
+	else:
+		sprite_2d.flip_v = false
+		booster_fuel += fuel_regen * delta
+		if booster_fuel >= max_booster_fuel:
+			booster_fuel = max_booster_fuel
+
+func try_boost():
+	if booster_fuel > 0 and not is_boosting:
+		is_boosting = true
+	else:
+		is_boosting = false
+		thruster_speed = base_thruster_speed
+
+func handle_inputs():
 	if Input.is_action_pressed("reset"):
 		game_over()
-	jump_preview.update_preview(jump_force, max_jump_vel)
-	direction_vector.update(linear_velocity)
+	if Input.is_action_just_pressed( "jump"):
+		try_boost()
+	if Input.is_action_just_released("jump"):
+		try_boost()
 
+func bump():
+	if get_contact_count() > 0: #contact interactions
+		var colliding_bodies = get_colliding_bodies()
+		for i in len(colliding_bodies):
+			print(i)
+			if colliding_bodies[i].is_in_group("player"):
+				var collider_dir = get_collider_dir(colliding_bodies[i])
+				apply_central_impulse(collider_dir.normalized() * bumpiness)
+				print("coliding with : ", colliding_bodies[i])
+			else: 
+				pass
+
+func get_collider_dir(collider):
+	var global_dir = global_position - collider.global_position
+	print(global_dir)
+	return global_dir
+	
 func get_mouse_dir():
 	var screen_size = get_window().size
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -39,27 +92,13 @@ func get_mouse_dir():
 	var true_jump_dir = jump_direction.normalized()
 	return true_jump_dir
 
-func jump():
-	jump_velocity = get_mouse_dir() * jump_force
-	jumping = true #jumping true dure la durée du timer pour entre autre empecher jumper de se recoller a la deuxieme frame du saut
-	timer.start()
-	apply_central_impulse(jump_velocity)
-	jump_force = 0
-
-func _on_timer_timeout():
-	jumping = false
-	pass # Replace with function body.
-
-func add_jump_force(delta):
-	jump_force += max_jump_vel / time_to_max_jump * delta
-	if jump_force >= max_jump_vel:
-		jump_force = max_jump_vel
-	print(jump_force)
-	
+func move():
+	if moving:
+		var move_dir_speed = get_mouse_dir() * thruster_speed
+		apply_central_force(move_dir_speed)
 
 func game_over():
 	respawn()
-	is_sticking = false
 
 func respawn(): 
 	set_position(starting_pos)
