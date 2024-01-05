@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dvr0nl20r1wci"]
 
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_5tifr"]
-[ext_resource type="Script" path="res://Scripts/jumper.gd" id="1_p6lrq"]
+[ext_resource type="Script" path="res://Scenes/player/jumper.gd" id="1_fuxu5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_acnxy"]
 rough = true
@@ -18,7 +18,7 @@ radius = 64.1249
 position = Vector2(0, -63)
 physics_material_override = SubResource("PhysicsMaterial_acnxy")
 gravity_scale = 0.0
-script = ExtResource("1_p6lrq")
+script = ExtResource("1_fuxu5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_5tifr")

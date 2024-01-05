@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+signal fuel_lvl()
+
 @onready var sprite_2d = $Sprite2D
 
 var moving = true
@@ -11,12 +13,12 @@ var is_boosting = false
 @export var max_booster_fuel = 1000
 @export var fuel_regen = 200
 @export var fuel_conso = 500 
-@export var bumpiness = 300
-@export var base_thruster_speed = 600
+
+@export var base_thruster_speed = 200
 @export var booster_speed = 600
 @export var max_speed = 1000
 
-
+@export var bumpiness = 300
 
 func _ready():
 	thruster_speed = base_thruster_speed
@@ -32,9 +34,9 @@ func _process(delta):
 	
 	move() #makes the player move
 	
-	print_debbug()
-	
 	boost(delta)
+	
+	print_debbug()
 
 func print_debbug():
 	#print(thruster_speed)
@@ -52,21 +54,24 @@ func boost(delta):
 		booster_fuel += fuel_regen * delta
 		if booster_fuel >= max_booster_fuel:
 			booster_fuel = max_booster_fuel
+	fuel_lvl.emit(booster_fuel, max_booster_fuel)
+	
 
 func try_boost():
 	if booster_fuel > 0 and not is_boosting:
 		is_boosting = true
-	else:
-		is_boosting = false
-		thruster_speed = base_thruster_speed
 
+func stop_boost():
+	is_boosting = false
+	thruster_speed = base_thruster_speed
+	
 func handle_inputs():
 	if Input.is_action_pressed("reset"):
 		game_over()
 	if Input.is_action_just_pressed( "jump"):
 		try_boost()
 	if Input.is_action_just_released("jump"):
-		try_boost()
+		stop_boost()
 
 func bump():
 	if get_contact_count() > 0: #contact interactions

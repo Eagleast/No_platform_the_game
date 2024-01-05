@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://8l50u8maqmrn"]
+[gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
 
-[ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/jumper.tscn" id="1_csb1s"]
+[ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="1_csb1s"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
-[ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://bumper.tscn" id="5_pty02"]
+[ext_resource type="PackedScene" uid="uid://bqqyx7a8warb5" path="res://Scenes/Ui/ui.tscn" id="4_nxrw3"]
+[ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="5_pty02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
 size = Vector2(4.34, 29.705)
@@ -44,3 +45,7 @@ scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_mfd2g")
 
 [node name="RigidBody2D" parent="." instance=ExtResource("5_pty02")]
+
+[node name="UI" parent="." instance=ExtResource("4_nxrw3")]
+
+[connection signal="fuel_lvl" from="Jumper" to="UI" method="_on_fuel_lvl"]
