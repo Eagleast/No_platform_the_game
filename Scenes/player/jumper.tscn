@@ -37,12 +37,25 @@ shape = SubResource("CircleShape2D_7wnkw")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.59, 0.59)
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="sound_holder" type="Node2D" parent="."]
+unique_name_in_owner = true
 
-[node name="prout" type="AudioStreamPlayer2D" parent="Node2D"]
+[node name="prout" type="AudioStreamPlayer2D" parent="sound_holder"]
 stream = ExtResource("3_km7f0")
 script = ExtResource("4_sniod")
 
-[node name="boosters" type="AudioStreamPlayer2D" parent="Node2D"]
+[node name="boosters" type="AudioStreamPlayer2D" parent="sound_holder"]
 stream = ExtResource("5_0n3oh")
 volume_db = -22.034
+
+[node name="Dash" type="Node2D" parent="."]
+
+[node name="dash_reloading" type="Timer" parent="Dash"]
+wait_time = 5.352
+one_shot = true
+
+[node name="dash_activation" type="Timer" parent="Dash"]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="Dash/dash_activation" to="." method="_on_dash_activation_timeout"]

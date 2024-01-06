@@ -3,9 +3,11 @@ extends RigidBody2D
 signal fuel_lvl()
 
 @onready var sprite_2d = $Sprite2D
-@onready var prout = $Node2D/prout
-@onready var boosters = $Node2D/boosters
+@onready var prout = $sound_holder/prout
+@onready var boosters = $sound_holder/boosters
 @onready var death_zone = $"../death_zone"
+@onready var dash_reloading = $Dash/dash_reloading
+@onready var dash_activation = $Dash/dash_activation
 
 var prev_vel = 0
 var moving = true
@@ -14,6 +16,7 @@ var thruster_speed = 600
 var booster_fuel = 100
 var is_boosting = false
 var is_dead = false
+var dash = false
 
 enum INPUT_SCHEMES {KEYBOARD_MOUSE, GAMEPAD}
 static var Input_scheme : INPUT_SCHEMES = INPUT_SCHEMES.GAMEPAD
@@ -25,6 +28,7 @@ static var Input_scheme : INPUT_SCHEMES = INPUT_SCHEMES.GAMEPAD
 @export var base_thruster_speed = 200
 @export var booster_speed = 600
 @export var max_speed = 1000
+@export var dash_force = 10000
 
 @export var bumpiness = 1
 
@@ -45,6 +49,8 @@ func _physics_process(delta):
 	bump(prev_vel) #handles bumps with other players or environement
 	prev_vel = linear_velocity #needed so we dont use uptated velocitys when coliding.
 	boost(delta)
+	if dash:
+		try_dash(input_dir)
 
 func _process(_delta):
 	pass
@@ -65,6 +71,9 @@ func handle_inputs():
 		try_boost()
 	if Input.is_action_just_released("boost"):
 		stop_boost()
+	if Input.is_action_just_pressed("dash"):
+		try_dash(input_dir)
+
 	return input_dir
 
 func boost(delta):
@@ -132,3 +141,15 @@ func respawn():
 
 func _on_death_zone_area_entered(_area):
 	game_over()
+
+func try_dash(player_dir):
+	if dash:
+		apply_central_impulse(player_dir * dash_force)
+		dash = false
+		dash_reloading.start()
+		return
+	if dash_reloading.is_stopped() and dash_activation.is_stopped():
+		dash_activation.start()
+
+func _on_dash_activation_timeout():
+	dash = true
