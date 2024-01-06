@@ -13,6 +13,7 @@ var starting_pos = Vector2(0,0)
 var thruster_speed = 600
 var booster_fuel = 100
 var is_boosting = false
+var is_dead = false
 
 enum INPUT_SCHEMES {KEYBOARD_MOUSE, GAMEPAD}
 static var Input_scheme : INPUT_SCHEMES = INPUT_SCHEMES.GAMEPAD
@@ -25,7 +26,7 @@ static var Input_scheme : INPUT_SCHEMES = INPUT_SCHEMES.GAMEPAD
 @export var booster_speed = 600
 @export var max_speed = 1000
 
-@export var bumpiness = 2
+@export var bumpiness = 1
 
 func _ready():
 	thruster_speed = base_thruster_speed
@@ -33,6 +34,10 @@ func _ready():
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
 	lock_rotation = true
+
+func _integrate_forces(state):
+	if is_dead:
+		respawn()
 
 func _physics_process(delta):
 	var input_dir = handle_inputs() #handles input presses
@@ -118,11 +123,12 @@ func move(move_dir):
 		apply_central_force(move_dir_speed)
 
 func game_over():
-	respawn()
+	is_dead = true
 
 func respawn(): 
 	set_position(starting_pos)
-
+	linear_velocity = Vector2(0,0)
+	is_dead = false
 
 func _on_death_zone_area_entered(_area):
 	game_over()
