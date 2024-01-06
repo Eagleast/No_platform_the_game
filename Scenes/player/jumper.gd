@@ -42,13 +42,6 @@ func _physics_process(delta):
 func _process(delta):
 	handle_inputs() #handles input presses
 	boost(delta)
-	print_debbug()
-
-func print_debbug():
-	#print(thruster_speed)
-	#print(booster_fuel)
-	
-	pass
 
 func handle_inputs():
 	if Input.is_action_pressed("reset"):
