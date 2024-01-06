@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvr0nl20r1wci"]
+[gd_scene load_steps=9 format=3 uid="uid://dvr0nl20r1wci"]
 
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_5tifr"]
 [ext_resource type="Script" path="res://Scenes/player/jumper.gd" id="1_fuxu5"]
+[ext_resource type="AudioStream" uid="uid://dcvbovs46d1vn" path="res://Assets/prout_rire.mp3" id="3_km7f0"]
+[ext_resource type="Script" path="res://Scenes/player/AudioStreamPlayer2D.gd" id="4_sniod"]
+[ext_resource type="AudioStream" uid="uid://dmv16142jhys4" path="res://Assets/boosters_audio.mp3" id="5_0n3oh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_acnxy"]
 rough = true
@@ -33,3 +36,13 @@ shape = SubResource("CircleShape2D_7wnkw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.59, 0.59)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="prout" type="AudioStreamPlayer2D" parent="Node2D"]
+stream = ExtResource("3_km7f0")
+script = ExtResource("4_sniod")
+
+[node name="boosters" type="AudioStreamPlayer2D" parent="Node2D"]
+stream = ExtResource("5_0n3oh")
+volume_db = -22.034

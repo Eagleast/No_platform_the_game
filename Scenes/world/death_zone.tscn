@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://28aqvkm6d43v"]
+
+[ext_resource type="Texture2D" uid="uid://swdvs6hthdy3" path="res://Assets/slime_mc.png" id="1_c06c2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bpn5h"]
+radius = 444.136
+
+[node name="death_zone" type="Area2D"]
+position = Vector2(23.275, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(888.725, -60)
+shape = SubResource("CircleShape2D_bpn5h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(886.725, -334)
+scale = Vector2(13.1281, 16.0467)
+texture = ExtResource("1_c06c2")

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_sash4"]
 radius = 63.3877
 
-[node name="RigidBody2D" type="RigidBody2D" groups=["player"]]
+[node name="RigidBody2D" type="RigidBody2D" groups=["bumper"]]
 gravity_scale = 1.66533e-16
 script = ExtResource("1_g6a0h")
 
