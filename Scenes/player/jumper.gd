@@ -13,6 +13,9 @@ var thruster_speed = 600
 var booster_fuel = 100
 var is_boosting = false
 
+enum INPUT_SCHEME {KEYBOARD_MOUSE, GAMEPAD}
+static var Input_scheme : INPUT_SCHEME = INPUT_SCHEME.GAMEPAD
+
 @export var max_booster_fuel = 1000
 @export var fuel_regen = 200
 @export var fuel_conso = 500 
@@ -31,23 +34,22 @@ func _ready():
 	lock_rotation = true
 
 func _physics_process(delta):
-	
 	move() #makes the player move
 	bump(prev_vel) #handles bumps with other players or environement
 	prev_vel = linear_velocity #needed so we dont use uptated velocitys when coliding.
-
+	var input_dir = Input.get_axis("move_up", "move_down")
+	print(input_dir)
 func _process(delta):
-	
 	handle_inputs() #handles input presses
-	
 	boost(delta)
-	
 	print_debbug()
 
 func print_debbug():
 	#print(thruster_speed)
 	#print(booster_fuel)
+	
 	pass
+
 func handle_inputs():
 	if Input.is_action_pressed("reset"):
 		game_over()
@@ -81,11 +83,10 @@ func stop_boost():
 func bump(speed):
 	if get_contact_count() > 0: #contact interactions
 		var colliding_bodies = get_colliding_bodies()
-		for i in len(colliding_bodies):
-			var collider = colliding_bodies[i]
+		for collider in colliding_bodies:
 			if collider.is_in_group("player") and collider.bumpable:
 				collider.stop_bump()
-				var collider_dir = get_collider_dir(colliding_bodies[i])
+				var collider_dir = get_collider_dir(collider)
 				apply_central_impulse(collider_dir.normalized() * (speed.length() + 1) * bumpiness)
 				print("linear velocity : ", speed.length())
 			else: 
