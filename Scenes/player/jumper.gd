@@ -11,6 +11,7 @@ signal fuel_lvl()
 @onready var dash_activation = $Dash/dash_activation
 @onready var ui = $Control
 
+var bumpable = true
 var prev_vel = 0
 var moving = true
 var starting_pos = Vector2(0,0)
@@ -40,7 +41,6 @@ func _ready():
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
 	lock_rotation = true
-	death_zone.body_entered.connect(_on_death_zone_area_entered)	
 
 func _integrate_forces(state):
 	if is_dead:
@@ -105,12 +105,15 @@ func bump(speed):
 		for collider in colliding_bodies:
 			if collider.is_in_group("bumper") and collider.bumpable:
 				prout.play()
-				collider.stop_bump()
+				collider.bumped()
 				var collider_dir = get_collider_dir(collider)
 				apply_central_impulse(collider_dir.normalized() * (speed.length() + 1) * bumpiness)
 				print("linear velocity : ", speed.length())
 			else: 
 				pass
+
+func bumped():
+	pass
 
 func get_collider_dir(collider):
 	var global_dir : Vector2 = global_position - collider.global_position
@@ -135,10 +138,6 @@ func respawn():
 	set_position(starting_pos)
 	linear_velocity = Vector2(0,0)
 	is_dead = false
-
-func _on_death_zone_area_entered(_body):
-	if _body == self:
-		game_over()
 
 func try_dash():
 	if dash_reloading.is_stopped() and dash_activation.is_stopped():

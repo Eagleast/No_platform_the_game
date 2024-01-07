@@ -7,6 +7,9 @@ var bumpable = true
 func _ready():
 	lock_rotation = true
 
+func bumped():
+	stop_bump()
+	
 func stop_bump(): 
 	sprite_2d.flip_v = false
 	bumpable = false

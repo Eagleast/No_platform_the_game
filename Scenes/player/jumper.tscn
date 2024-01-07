@@ -22,7 +22,7 @@ radius = 63.2851
 [sub_resource type="CircleShape2D" id="CircleShape2D_7wnkw"]
 radius = 64.1249
 
-[node name="Jumper" type="RigidBody2D" groups=["player"]]
+[node name="Jumper" type="RigidBody2D" groups=["bumper", "player"]]
 position = Vector2(0, -63)
 physics_material_override = SubResource("PhysicsMaterial_acnxy")
 gravity_scale = 0.0

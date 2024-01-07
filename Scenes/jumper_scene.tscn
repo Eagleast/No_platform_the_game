@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
+[gd_scene load_steps=7 format=3 uid="uid://8l50u8maqmrn"]
 
 [ext_resource type="Script" path="res://Scenes/main_scene.gd" id="1_e2qxm"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
 [ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="5_c5fig"]
+[ext_resource type="Script" path="res://Scenes/world/death_zone.gd" id="5_e0vrn"]
 [ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="5_pty02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
@@ -49,6 +50,7 @@ position = Vector2(12, -3)
 
 [node name="death_zone" parent="." instance=ExtResource("5_c5fig")]
 position = Vector2(893, 974)
+script = ExtResource("5_e0vrn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-189, -27)
@@ -56,3 +58,5 @@ rotation = -0.0217602
 scale = Vector2(22.9162, 4.64)
 offset = Vector2(1000, 0)
 zoom = Vector2(0.215, 0.215)
+
+[connection signal="body_entered" from="death_zone" to="death_zone" method="_on_body_entered"]
