@@ -1,10 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvr0nl20r1wci"]
+[gd_scene load_steps=14 format=3 uid="uid://dvr0nl20r1wci"]
 
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_5tifr"]
 [ext_resource type="Script" path="res://Scenes/player/jumper.gd" id="1_fuxu5"]
 [ext_resource type="AudioStream" uid="uid://dcvbovs46d1vn" path="res://Assets/prout_rire.mp3" id="3_km7f0"]
 [ext_resource type="Script" path="res://Scenes/player/AudioStreamPlayer2D.gd" id="4_sniod"]
 [ext_resource type="AudioStream" uid="uid://dmv16142jhys4" path="res://Assets/boosters_audio.mp3" id="5_0n3oh"]
+[ext_resource type="Script" path="res://Scenes/player/Control.gd" id="7_ima3r"]
+[ext_resource type="PackedScene" uid="uid://cagysqgd3nyht" path="res://Scenes/Ui/fuel_lvl.tscn" id="7_wat0y"]
+[ext_resource type="Texture2D" uid="uid://dwh1two4ddlc0" path="res://Assets/UI/dash_bar/Teinte_Saturation 1.png" id="8_v7vsj"]
+[ext_resource type="Texture2D" uid="uid://dsexnyfk5acq8" path="res://Assets/UI/dash_bar/front.png" id="9_hlcrt"]
+[ext_resource type="Texture2D" uid="uid://dsr6x0ursk86b" path="res://Assets/UI/dash_bar/progress.png" id="10_tgk0j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_acnxy"]
 rough = true
@@ -34,9 +39,6 @@ shape = SubResource("CircleShape2D_l5evq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_7wnkw")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.59, 0.59)
-
 [node name="sound_holder" type="Node2D" parent="."]
 unique_name_in_owner = true
 
@@ -51,11 +53,42 @@ volume_db = -22.034
 [node name="Dash" type="Node2D" parent="."]
 
 [node name="dash_reloading" type="Timer" parent="Dash"]
-wait_time = 5.352
+wait_time = 5.0
 one_shot = true
 
 [node name="dash_activation" type="Timer" parent="Dash"]
 wait_time = 0.1
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -98.0
+offset_top = 68.0
+offset_right = -98.0
+offset_bottom = 68.0
+scale = Vector2(2, 2)
+script = ExtResource("7_ima3r")
+
+[node name="Fuel_lvl" parent="Control" instance=ExtResource("7_wat0y")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 16.0
+
+[node name="dash_bar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 85.5
+offset_top = -43.0
+offset_right = 125.5
+offset_bottom = -3.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 3
+texture_under = ExtResource("8_v7vsj")
+texture_over = ExtResource("9_hlcrt")
+texture_progress = ExtResource("10_tgk0j")
 
 [connection signal="timeout" from="Dash/dash_activation" to="." method="_on_dash_activation_timeout"]
