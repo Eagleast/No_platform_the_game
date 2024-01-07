@@ -40,6 +40,7 @@ func _ready():
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
 	lock_rotation = true
+	death_zone.body_entered.connect(_on_death_zone_area_entered)	
 
 func _integrate_forces(state):
 	if is_dead:
@@ -135,8 +136,9 @@ func respawn():
 	linear_velocity = Vector2(0,0)
 	is_dead = false
 
-func _on_death_zone_area_entered(_area):
-	game_over()
+func _on_death_zone_area_entered(_body):
+	if _body == self:
+		game_over()
 
 func try_dash():
 	if dash_reloading.is_stopped() and dash_activation.is_stopped():

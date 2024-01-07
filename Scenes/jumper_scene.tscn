@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
 
-[ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="1_csb1s"]
+[ext_resource type="Script" path="res://Scenes/main_scene.gd" id="1_e2qxm"]
 [ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_jxg68"]
 [ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="5_c5fig"]
 [ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="5_pty02"]
@@ -9,18 +9,13 @@
 size = Vector2(4.34, 29.705)
 
 [node name="main_scene" type="Node2D"]
+script = ExtResource("1_e2qxm")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(881, -65.25)
 scale = Vector2(22.6563, 21.9102)
 texture = ExtResource("1_jxg68")
-
-[node name="Jumper" parent="." instance=ExtResource("1_csb1s")]
-position = Vector2(-324, -51)
-base_thruster_speed = 400
-booster_speed = 1000
-dash_force = 1000
 
 [node name="outside_walls" type="Node2D" parent="."]
 
@@ -61,5 +56,3 @@ rotation = -0.0217602
 scale = Vector2(22.9162, 4.64)
 offset = Vector2(1000, 0)
 zoom = Vector2(0.215, 0.215)
-
-[connection signal="area_entered" from="death_zone" to="Jumper" method="_on_death_zone_area_entered"]
