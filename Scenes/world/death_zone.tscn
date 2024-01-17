@@ -12,7 +12,7 @@ position = Vector2(23.275, 0)
 position = Vector2(888.725, -60)
 shape = SubResource("CircleShape2D_bpn5h")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(886.725, -334)
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(-2, -274)
 scale = Vector2(13.1281, 16.0467)
 texture = ExtResource("1_c06c2")

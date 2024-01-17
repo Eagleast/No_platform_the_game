@@ -22,7 +22,7 @@ radius = 63.2851
 [sub_resource type="CircleShape2D" id="CircleShape2D_7wnkw"]
 radius = 64.1249
 
-[node name="Jumper" type="RigidBody2D" groups=["bumper", "player"]]
+[node name="Jumper" type="RigidBody2D" groups=["player"]]
 position = Vector2(0, -63)
 physics_material_override = SubResource("PhysicsMaterial_acnxy")
 gravity_scale = 0.0
@@ -79,10 +79,10 @@ offset_bottom = 16.0
 
 [node name="dash_bar" type="TextureProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = 85.5
-offset_top = -43.0
-offset_right = 139.5
-offset_bottom = 257.0
+offset_left = 22.0
+offset_top = -378.5
+offset_right = 76.0
+offset_bottom = -78.5
 max_value = 1.0
 step = 0.01
 value = 1.0
