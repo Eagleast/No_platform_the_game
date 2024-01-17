@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5bigiv5pu2i6"]
+[gd_scene load_steps=6 format=3 uid="uid://c5bigiv5pu2i6"]
 
 [ext_resource type="Texture2D" uid="uid://cwb6kulxh2siq" path="res://Assets/menu_background.png" id="1_hml2o"]
 [ext_resource type="Theme" uid="uid://bncxovbewxu8b" path="res://Assets/new_theme.tres" id="2_uu75u"]
+[ext_resource type="Script" path="res://Scenes/Ui/exit_game.gd" id="4_j0q05"]
+[ext_resource type="Script" path="res://Scenes/Ui/Button_nb_player.gd" id="4_jtht8"]
 [ext_resource type="Script" path="res://Scenes/Ui/Button.gd" id="4_k7ggi"]
 
 [node name="Control" type="Control"]
@@ -40,18 +42,27 @@ text = "Bonjour, bienvenu dans le jeu"
 layout_mode = 0
 offset_left = 864.0
 offset_top = 332.0
-offset_right = 904.0
-offset_bottom = 372.0
+offset_right = 1013.0
+offset_bottom = 441.0
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="start_game" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Appuie pour jouer"
 script = ExtResource("4_k7ggi")
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="exit_game" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Appuie pour jouer"
+script = ExtResource("4_j0q05")
 
-[connection signal="focus_entered" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_focus_entered"]
-[connection signal="focus_exited" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_focus_exited"]
-[connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_pressed"]
+[node name="nb_player" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "nombre joueur =1"
+script = ExtResource("4_jtht8")
+
+[connection signal="focus_entered" from="VBoxContainer/start_game" to="VBoxContainer/start_game" method="_on_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/start_game" to="VBoxContainer/start_game" method="_on_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/start_game" to="VBoxContainer/start_game" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/exit_game" to="VBoxContainer/exit_game" method="_on_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/nb_player" to="VBoxContainer/nb_player" method="_on_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/nb_player" to="VBoxContainer/nb_player" method="_on_focus_exited"]
