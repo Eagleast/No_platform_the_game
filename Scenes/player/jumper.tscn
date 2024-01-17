@@ -79,10 +79,10 @@ offset_bottom = 16.0
 
 [node name="dash_bar" type="TextureProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = 85.5
-offset_top = -43.0
-offset_right = 125.5
-offset_bottom = -3.0
+offset_left = 22.0
+offset_top = -378.5
+offset_right = 76.0
+offset_bottom = -78.5
 max_value = 1.0
 step = 0.01
 value = 1.0

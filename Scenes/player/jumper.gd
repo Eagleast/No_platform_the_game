@@ -55,7 +55,6 @@ func _physics_process(delta):
 
 func _process(_delta):
 	pass
-	print(Engine.get_frames_per_second())
 
 func handle_inputs():
 	if Input_scheme == INPUT_SCHEMES.GAMEPAD or Input_scheme == INPUT_SCHEMES.KEYBOARD:
