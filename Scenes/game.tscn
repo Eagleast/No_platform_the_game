@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
 
-[ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_hd6r0"]
-[ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="2_t4cxo"]
-[ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="3_ihtgq"]
-[ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="4_h5t4m"]
+[ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_3f6gx"]
+[ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="2_ok467"]
+[ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="3_1kp6w"]
+[ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="4_faoli"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
 size = Vector2(4.34, 29.705)
@@ -13,9 +13,9 @@ size = Vector2(4.34, 29.705)
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(881, -65.25)
 scale = Vector2(22.6563, 21.9102)
-texture = ExtResource("1_hd6r0")
+texture = ExtResource("1_3f6gx")
 
-[node name="Jumper" parent="." instance=ExtResource("2_t4cxo")]
+[node name="Jumper" parent="." instance=ExtResource("2_ok467")]
 position = Vector2(195, -612)
 base_thruster_speed = 400
 booster_speed = 1000
@@ -48,10 +48,10 @@ rotation = 1.5708
 scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_mfd2g")
 
-[node name="bumper" parent="." instance=ExtResource("3_ihtgq")]
+[node name="bumper" parent="." instance=ExtResource("3_1kp6w")]
 position = Vector2(913, -6)
 
-[node name="death_zone" parent="." instance=ExtResource("4_h5t4m")]
+[node name="death_zone" parent="." instance=ExtResource("4_faoli")]
 position = Vector2(893, 974)
 
 [node name="main_fixed_camera" type="Camera2D" parent="."]
