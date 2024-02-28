@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
 
-[ext_resource type="Texture2D" uid="uid://brtt04gm73rop" path="res://icon.svg" id="1_3f6gx"]
+[ext_resource type="Texture2D" uid="uid://crujssjpxxis8" path="res://Assets/World/placeholder_stage.png" id="1_ypjyf"]
 [ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="2_ok467"]
 [ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="3_1kp6w"]
 [ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="4_faoli"]
@@ -12,8 +12,8 @@ size = Vector2(4.34, 29.705)
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(881, -65.25)
-scale = Vector2(22.6563, 21.9102)
-texture = ExtResource("1_3f6gx")
+scale = Vector2(1.66, 1.66)
+texture = ExtResource("1_ypjyf")
 
 [node name="Jumper" parent="." instance=ExtResource("2_ok467")]
 position = Vector2(195, -612)
