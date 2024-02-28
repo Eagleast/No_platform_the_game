@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsexnyfk5acq8"
-path="res://.godot/imported/front.png-30475ee7ebeb81456f55d3ff8dbcaceb.ctex"
+uid="uid://dwh1two4ddlc0"
+path="res://.godot/imported/Teinte_Saturation 1_old.png-f9ea87e20b0c1bb384699b3910af3993.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/dash_bar/front.png"
-dest_files=["res://.godot/imported/front.png-30475ee7ebeb81456f55d3ff8dbcaceb.ctex"]
+source_file="res://Assets/UI/dash_bar/Teinte_Saturation 1_old.png"
+dest_files=["res://.godot/imported/Teinte_Saturation 1_old.png-f9ea87e20b0c1bb384699b3910af3993.ctex"]
 
 [params]
 
