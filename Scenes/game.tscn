@@ -52,12 +52,12 @@ shape = SubResource("RectangleShape2D_mfd2g")
 position = Vector2(913, -6)
 
 [node name="death_zone" parent="." instance=ExtResource("4_faoli")]
+visible = false
 position = Vector2(893, 974)
 
 [node name="main_fixed_camera" type="Camera2D" parent="."]
-position = Vector2(913, 0)
-rotation = -0.0217602
-scale = Vector2(493.876, 100)
-zoom = Vector2(0.2, 0.2)
+position = Vector2(926, -62)
+scale = Vector2(1e-05, 1e-05)
+zoom = Vector2(0.36, 0.36)
 
 [connection signal="area_entered" from="death_zone" to="Jumper" method="_on_death_zone_area_entered"]
