@@ -86,7 +86,7 @@ scale = Vector2(0.206351, 0.206351)
 max_value = 1.0
 step = 0.01
 value = 1.0
-fill_mode = 3
+fill_mode = 7
 texture_progress = ExtResource("8_fgpnb")
 
 [connection signal="timeout" from="Dash/dash_activation" to="." method="_on_dash_activation_timeout"]

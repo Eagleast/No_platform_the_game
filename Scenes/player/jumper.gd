@@ -62,6 +62,10 @@ func handle_inputs():
 		var input_dir_y = Input.get_axis("move_up", "move_down")
 		var input_dir_x = Input.get_axis("move_left", "move_right")
 		move_dir = Vector2(input_dir_x, input_dir_y)
+		if Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+			$Sprite2D.global_rotation = move_dir.angle()
+		
+		
 
 	if Input.is_action_pressed("reset"):
 		game_over()
