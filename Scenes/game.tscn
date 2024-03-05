@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://8l50u8maqmrn"]
+[gd_scene load_steps=7 format=3 uid="uid://8l50u8maqmrn"]
 
 [ext_resource type="Texture2D" uid="uid://crujssjpxxis8" path="res://Assets/World/placeholder_stage.png" id="1_ypjyf"]
 [ext_resource type="PackedScene" uid="uid://dvr0nl20r1wci" path="res://Scenes/player/jumper.tscn" id="2_ok467"]
 [ext_resource type="PackedScene" uid="uid://ccih1ofbh8min" path="res://Scenes/world/bumper.tscn" id="3_1kp6w"]
 [ext_resource type="PackedScene" uid="uid://28aqvkm6d43v" path="res://Scenes/world/death_zone.tscn" id="4_faoli"]
+[ext_resource type="PackedScene" uid="uid://dd08bhf404x5k" path="res://Scenes/player/jumper2.tscn" id="5_mqnev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd2g"]
 size = Vector2(4.34, 29.705)
@@ -49,7 +50,7 @@ scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_mfd2g")
 
 [node name="bumper" parent="." instance=ExtResource("3_1kp6w")]
-position = Vector2(913, -6)
+position = Vector2(813, 639)
 
 [node name="death_zone" parent="." instance=ExtResource("4_faoli")]
 visible = false
@@ -59,5 +60,17 @@ position = Vector2(893, 974)
 position = Vector2(926, -62)
 scale = Vector2(1e-05, 1e-05)
 zoom = Vector2(0.36, 0.36)
+
+[node name="Jumper2" parent="." instance=ExtResource("5_mqnev")]
+position = Vector2(1535, -537)
+move_right_action = "move_right_2"
+move_left_action = "move_left_2"
+move_down_action = "move_down_2"
+move_up_action = "move_up_2"
+boost_action = "boost_2"
+dash_action = "dash_2"
+base_thruster_speed = 400
+booster_speed = 1000
+dash_force = 1000
 
 [connection signal="area_entered" from="death_zone" to="Jumper" method="_on_death_zone_area_entered"]

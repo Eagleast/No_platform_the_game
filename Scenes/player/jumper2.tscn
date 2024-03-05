@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://dd08bhf404x5k"]
+
+[ext_resource type="Script" path="res://Scenes/player/jumper.gd" id="1_4s5mt"]
+[ext_resource type="Texture2D" uid="uid://cnh4b8wr17puw" path="res://Assets/Character/placeholder_character.png" id="2_sbgqq"]
+[ext_resource type="AudioStream" uid="uid://dcvbovs46d1vn" path="res://Assets/prout_rire.mp3" id="3_6u31u"]
+[ext_resource type="Script" path="res://Scenes/player/AudioStreamPlayer2D.gd" id="4_snct1"]
+[ext_resource type="AudioStream" uid="uid://dmv16142jhys4" path="res://Assets/boosters_audio.mp3" id="5_piroq"]
+[ext_resource type="Script" path="res://Scenes/player/Control.gd" id="6_phq2c"]
+[ext_resource type="PackedScene" uid="uid://cagysqgd3nyht" path="res://Scenes/Ui/fuel_lvl.tscn" id="7_l0h36"]
+[ext_resource type="Texture2D" uid="uid://crauvjb13lqxc" path="res://Assets/UI/dash_bar/placeholder_dash_bar.png" id="8_vu8gw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_acnxy"]
+rough = true
+bounce = 1.0
+absorbent = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l5evq"]
+radius = 63.2851
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7wnkw"]
+radius = 64.1249
+
+[node name="Jumper" type="RigidBody2D" groups=["player"]]
+position = Vector2(0, -63)
+physics_material_override = SubResource("PhysicsMaterial_acnxy")
+gravity_scale = 0.0
+script = ExtResource("1_4s5mt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0962771, 0.0962771)
+texture = ExtResource("2_sbgqq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_l5evq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_7wnkw")
+
+[node name="sound_holder" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="prout" type="AudioStreamPlayer2D" parent="sound_holder"]
+stream = ExtResource("3_6u31u")
+script = ExtResource("4_snct1")
+
+[node name="boosters" type="AudioStreamPlayer2D" parent="sound_holder"]
+stream = ExtResource("5_piroq")
+volume_db = -22.034
+
+[node name="Dash" type="Node2D" parent="."]
+
+[node name="dash_reloading" type="Timer" parent="Dash"]
+wait_time = 5.0
+one_shot = true
+
+[node name="dash_activation" type="Timer" parent="Dash"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -98.0
+offset_top = 68.0
+offset_right = -98.0
+offset_bottom = 68.0
+scale = Vector2(2, 2)
+script = ExtResource("6_phq2c")
+
+[node name="Fuel_lvl" parent="Control" instance=ExtResource("7_l0h36")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = -27.5
+offset_right = 2048.0
+offset_bottom = 2020.5
+
+[node name="dash_bar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 18.5
+offset_top = -63.0
+offset_right = 306.5
+offset_bottom = 237.0
+scale = Vector2(0.206351, 0.206351)
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 7
+texture_progress = ExtResource("8_vu8gw")
+
+[connection signal="timeout" from="Dash/dash_activation" to="." method="_on_dash_activation_timeout"]

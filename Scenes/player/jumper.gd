@@ -11,6 +11,13 @@ signal fuel_lvl()
 @onready var dash_activation = $Dash/dash_activation
 @onready var ui = $Control
 
+@export var move_right_action := "move_right"
+@export var move_left_action := "move_left"
+@export var move_down_action := "move_down"
+@export var move_up_action := "move_up"
+@export var boost_action  := "boost"
+@export var dash_action := "dash"
+
 var bumpable = true
 var prev_vel = 0
 var moving = true
@@ -59,21 +66,21 @@ func _process(_delta):
 
 func handle_inputs():
 	if Input_scheme == INPUT_SCHEMES.GAMEPAD or Input_scheme == INPUT_SCHEMES.KEYBOARD:
-		var input_dir_y = Input.get_axis("move_up", "move_down")
-		var input_dir_x = Input.get_axis("move_left", "move_right")
+		var input_dir_y = Input.get_axis(move_up_action, move_down_action)
+		var input_dir_x = Input.get_axis(move_left_action, move_right_action)
 		move_dir = Vector2(input_dir_x, input_dir_y)
-		if Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+		if Input.is_action_pressed(move_up_action) or Input.is_action_pressed(move_down_action) or Input.is_action_pressed(move_left_action) or Input.is_action_pressed(move_right_action):
 			$Sprite2D.global_rotation = move_dir.angle()
 		
 		
 
 	if Input.is_action_pressed("reset"):
 		game_over()
-	if Input.is_action_just_pressed( "boost"):
+	if Input.is_action_just_pressed(boost_action):
 		try_boost()
-	if Input.is_action_just_released("boost"):
+	if Input.is_action_just_released(boost_action):
 		stop_boost()
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed(dash_action):
 		try_dash()
 
 func boost(delta):
